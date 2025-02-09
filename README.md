@@ -5,9 +5,23 @@ Move2SSH is a handy script for working with `.ssh` directories. It allows you to
 ## 📥 Installation via Homebrew
 
 ```sh
-brew tap username/tap
+brew tap KITONK/tap
 brew install move2ssh
 ```
+
+## ⚠️ Homebrew Installation Fix
+
+If after installation, the move2ssh command is not found, follow these steps:
+
+1. Create a symbolic link to ensure the move2ssh command works:
+    ```sh
+    sudo ln -s /opt/homebrew/Cellar/move2ssh/1.0.0/bin/move2ssh.sh /usr/local/bin/move2ssh
+    ```
+
+2. After creating the symbolic link, you can use the move2ssh command:
+    ```sh
+    move2ssh -help
+    ```
 
 ## 🚀 Usage
 
@@ -59,7 +73,7 @@ brew uninstall move2ssh
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/username/move2ssh.git
+   git clone https://github.com/KITONK/move2ssh.git
    cd move2ssh
    ```
 
