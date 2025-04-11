@@ -20,20 +20,26 @@ If after installation, the move2ssh command is not found, follow these steps:
 
 2. After creating the symbolic link, you can use the move2ssh command:
     ```sh
-    move2ssh -help
+    move2ssh --h
+    ```
+    or
+    ```sh
+    move2ssh --help
     ```
 
 ## 🚀 Usage
 
 ```sh
-move2ssh [source_folder] [-m] [-help] [-list]
+move2ssh [source_folder] [--m|--move] [--h|--help] [--l|--list] [--b|--backup]
 ```
 
 ### 🔹 Arguments:
 - `source_folder` — name of the folder with files to copy.
-- `-m` — move files before copying.
-- `-help` — show help.
-- `-list` — show list of available directories.
+- `--m | --move` — move existing files to a new folder before copying from source folder.
+- `--h | --help` — show help message.
+- `--l | --list` — show list of all directories inside .ssh.
+- `--b | --backup` - create a backup of current .ssh files before replacing them.
+
 
 ### 📌 Examples
 
@@ -42,19 +48,48 @@ move2ssh [source_folder] [-m] [-help] [-list]
 move2ssh my-folder
 ```
 
-✅ **Move files before copying**
+✅ **Move existing files to a new folder before copying from source folder**
 ```sh
-move2ssh my-folder -m
+move2ssh my-folder --m
+```
+
+or
+
+```sh
+move2ssh my-folder --move
 ```
 
 ✅ **Show list of available directories**
 ```sh
-move2ssh -list
+move2ssh --l
 ```
 
-✅ **Show help**
+or
+
 ```sh
-move2ssh -help
+move2ssh --list
+```
+
+✅ **Show help message**
+```sh
+move2ssh --h
+```
+
+or
+
+```sh
+move2ssh --help
+```
+
+✅ **Create a backup of current .ssh files before replacing them**
+```sh
+move2ssh --b
+```
+
+or
+
+```sh
+move2ssh --backup
 ```
 
 ## 🔄 Update
