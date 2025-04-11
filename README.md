@@ -15,7 +15,7 @@ If after installation, the move2ssh command is not found, follow these steps:
 
 1. Create a symbolic link to ensure the move2ssh command works:
     ```sh
-    sudo ln -s /opt/homebrew/Cellar/move2ssh/1.0.0/bin/move2ssh.sh /usr/local/bin/move2ssh
+    sudo ln -s /opt/homebrew/Cellar/move2ssh/1.1.0/bin/move2ssh.sh /usr/local/bin/move2ssh
     ```
 
 2. After creating the symbolic link, you can use the move2ssh command:
