@@ -1,6 +1,6 @@
 # Move2SSH
 
-Move2SSH is a handy script for working with `.ssh` directories. It allows you to copy, move, and manage files inside `.ssh`.
+Move2SSH is a handy script for working with `.ssh` directories. It allows you to copy, move, and manage files inside `.ssh` with automatic Git configuration updates.
 
 ## 📥 Installation via Homebrew
 
@@ -15,7 +15,7 @@ If after installation, the move2ssh command is not found, follow these steps:
 
 1. Create a symbolic link to ensure the move2ssh command works:
     ```sh
-    sudo ln -s /opt/homebrew/Cellar/move2ssh/1.1.0/bin/move2ssh.sh /usr/local/bin/move2ssh
+    sudo ln -s /opt/homebrew/Cellar/move2ssh/1.2.0/bin/move2ssh.sh /usr/local/bin/move2ssh
     ```
 
 2. After creating the symbolic link, you can use the move2ssh command:
@@ -26,6 +26,19 @@ If after installation, the move2ssh command is not found, follow these steps:
     ```sh
     move2ssh --help
     ```
+
+## 📁 Directory Structure
+   ~/.ssh/
+   ├── personal/
+   │ ├── id_rsa
+   │ ├── id_rsa.pub
+   │ └── gitconfig
+   ├── work/
+   │ ├── id_rsa
+   │ ├── id_rsa.pub
+   │ └── gitconfig
+   └── ...
+
 
 ## 🚀 Usage
 
@@ -40,23 +53,28 @@ move2ssh [source_folder] [--m|--move] [--h|--help] [--l|--list] [--b|--backup]
 - `--l | --list` — show list of all directories inside .ssh.
 - `--b | --backup` - create a backup of current .ssh files before replacing them.
 
+### 🔄 Git Configuration
+Each SSH configuration folder can contain a `gitconfig` file with the following format:
+user.name=John Doe
+user.email=john@example.com
+
 
 ### 📌 Examples
 
-✅ **Copy files from `my-folder` to `.ssh`**
+✅ **Copy files from `personal` to `.ssh` and update Git config**
 ```sh
-move2ssh my-folder
+move2ssh personal
 ```
 
 ✅ **Move existing files to a new folder before copying from source folder**
 ```sh
-move2ssh my-folder --m
+move2ssh work --m
 ```
 
 or
 
 ```sh
-move2ssh my-folder --move
+move2ssh work --move
 ```
 
 ✅ **Show list of available directories**
@@ -92,6 +110,30 @@ or
 move2ssh --backup
 ```
 
+## 🔤 Shell Completion
+
+Move2SSH supports command completion in various shells:
+- Zsh
+- Bash
+- Fish
+- PowerShell
+- WSL
+- Git Bash
+
+Tab completion works for both folder names and options:
+```sh
+move2ssh [TAB]          # Shows available configurations
+move2ssh -[TAB]         # Shows available options
+```
+
+## 💻 Supported Environments
+
+- macOS (Bash, Zsh)
+- Linux (Bash, Zsh)
+- Windows Subsystem for Linux (WSL)
+- Git Bash
+- PowerShell
+
 ## 🔄 Update
 
 ```sh
@@ -112,15 +154,34 @@ brew uninstall move2ssh
    cd move2ssh
    ```
 
-2. Make the script executable:
-   ```sh
-   chmod +x move2ssh.sh
+2. Project structure:
+   ```
+   move2ssh/
+   ├── bin/
+   │   └── move2ssh
+   ├── completions/
+   │   ├── bash/
+   │   ├── fish/
+   │   ├── powershell/
+   │   └── zsh/
+   └── Formula/
    ```
 
-3. Run the script:
+3. Make the script executable:
    ```sh
-   ./move2ssh.sh my-folder
+   chmod +x bin/move2ssh
    ```
+
+4. Run the script:
+   ```sh
+   ./bin/move2ssh personal
+   ```
+
+## 🔒 Security Features
+
+- Automatically sets correct permissions (700 for .ssh, 600 for private keys)
+- Creates backups when using --backup
+- Safe file movement with --move option
 
 ## 📜 License
 
@@ -130,4 +191,3 @@ This project is licensed under the MIT License.
 
 💡 **Author:** [KITO](https://github.com/KITONK)  
 🚀 **GitHub:** [Move2SSH](https://github.com/KITONK/move2ssh)
-

@@ -1,0 +1,30 @@
+#compdef bin/move2ssh
+
+_move2ssh() {
+    local curcontext="$curcontext" state line
+    typeset -A opt_args
+
+    _arguments -C \
+        '1: :->folders' \
+        '*: :->options'
+
+    case $state in
+        folders)
+            local -a folders
+            folders=( $(find "$HOME/.ssh" -mindepth 1 -maxdepth 1 -type d -exec basename {} \;) )
+            _describe 'ssh folders' folders
+            ;;
+        options)
+            local -a opts
+            opts=(
+                {--h,--help}'[Show help message]'
+                {--l,--list}'[List all directories]'
+                {--m,--move}'[Move existing files]'
+                {--b,--backup}'[Create backup]'
+            )
+            _describe -t options 'move2ssh options' opts
+            ;;
+    esac
+}
+
+_move2ssh "$@"

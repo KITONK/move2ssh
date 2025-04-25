@@ -1,0 +1,36 @@
+_move2ssh() {
+    local cur prev opts folders ssh_dir
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    opts="--help --h --list --l --move --m --backup --b"
+
+    # Check if we are running under WSL
+    if [[ -n "$WSLENV" ]]; then
+        # For WSL, use the Windows home path
+        ssh_dir="$(wslpath "$(wslvar USERPROFILE)")/.ssh"
+    elif [[ "$OSTYPE" == "msys" ]]; then
+        # For Git Bash
+        ssh_dir="$HOME/.ssh"
+    else
+        # For regular bash/zsh
+        ssh_dir="$HOME/.ssh"
+    fi
+    
+    # If this is the first argument
+    if [[ ${COMP_CWORD} -eq 1 ]]; then
+        if [[ -d "$ssh_dir" ]]; then
+            folders=$(find "$ssh_dir" -mindepth 1 -maxdepth 1 -type d -exec basename {} \;)
+            COMPREPLY=( $(compgen -W "${folders}" -- ${cur}) )
+        fi
+        return 0
+    fi
+
+    # If the current word starts with -
+    if [[ ${cur} == -* ]] ; then
+        COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+        return 0
+    fi
+}
+
+complete -F _move2ssh bin/move2ssh
