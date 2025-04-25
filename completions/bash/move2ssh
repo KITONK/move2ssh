@@ -17,20 +17,19 @@ _move2ssh() {
         ssh_dir="$HOME/.ssh"
     fi
     
-    # If this is the first argument
-    if [[ ${COMP_CWORD} -eq 1 ]]; then
-        if [[ -d "$ssh_dir" ]]; then
-            folders=$(find "$ssh_dir" -mindepth 1 -maxdepth 1 -type d -exec basename {} \;)
-            COMPREPLY=( $(compgen -W "${folders}" -- ${cur}) )
-        fi
-        return 0
-    fi
-
     # If the current word starts with -
     if [[ ${cur} == -* ]] ; then
         COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
         return 0
     fi
+
+    # If no options are being entered, show folders
+    if [[ -d "$ssh_dir" ]]; then
+        folders=$(find "$ssh_dir" -mindepth 1 -maxdepth 1 -type d -exec basename {} \;)
+        COMPREPLY=( $(compgen -W "${folders}" -- ${cur}) )
+    fi
 }
 
+# Register completion for both variants
 complete -F _move2ssh bin/move2ssh
+complete -F _move2ssh move2ssh

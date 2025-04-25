@@ -4,6 +4,20 @@ _move2ssh() {
     local curcontext="$curcontext" state line
     typeset -A opt_args
 
+    local -a opts
+    opts=(
+        {--h,--help}'[Show help message]'
+        {--l,--list}'[List all directories]'
+        {--m,--move}'[Move existing files]'
+        {--b,--backup}'[Create backup]'
+    )
+
+    # Если текущее слово начинается с дефиса, показываем опции
+    if [[ $words[CURRENT] == -* ]]; then
+        _describe -t options 'move2ssh options' opts
+        return
+    fi
+
     _arguments -C \
         '1: :->folders' \
         '*: :->options'
@@ -15,16 +29,10 @@ _move2ssh() {
             _describe 'ssh folders' folders
             ;;
         options)
-            local -a opts
-            opts=(
-                {--h,--help}'[Show help message]'
-                {--l,--list}'[List all directories]'
-                {--m,--move}'[Move existing files]'
-                {--b,--backup}'[Create backup]'
-            )
             _describe -t options 'move2ssh options' opts
             ;;
     esac
 }
 
-_move2ssh "$@"
+compdef _move2ssh bin/move2ssh
+compdef _move2ssh move2ssh
